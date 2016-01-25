@@ -3,29 +3,41 @@ var Item = function(name, price) {
 	this.price = price;
 }
 
-//Here I should create objects array with all cats
-var itemCat1 = new Item("Tiger", 90);
-var itemCat2 = new Item("Mishka", 10);
-var itemCat3 = new Item("Sam", 70);
-var itemCat4 = new Item("Sleepy", 870);
-var itemCat5 = new Item("Ryzhyk", 90);
-
-var Buy = document.getElementsByTagName('button');
-
 var Cashier = {
 	total : 0,
 	getEl : function(){
-		var El = document.getElementsByTagName('p');
-		for (var i = 0; i < El.length; i++) {
-			price = itemCat[i].price;
-			Cashier.total += i;
-			return Cashier.total;
+		Cashier.total = 0;
+		BoughtCat = [];
+		for (var i = 0; i < checkbox.length; i++) {
+			var checked = checkbox[i].checked;
+				if (checked === true) {
+					Cashier.total += Cats[i].price;
+					BoughtCat.push(Cats[i].name);
+				}
+				else {
+					
+				}	
 		};
+		return Cashier.total;
 	}
 }
 
+var BoughtCat = [];
+var itemCat1 = new Item("Tiger", 10);
+var itemCat2 = new Item("Mishka", 20);
+var itemCat3 = new Item("Sam", 30);
+var itemCat4 = new Item("Sleepy", 40);
+var itemCat5 = new Item("Ryzhyk", 50);
+var Cats = [itemCat1, itemCat2, itemCat3, itemCat4, itemCat5];
 
-Buy[0].addEventListener('click', function(){
+var buy = document.getElementsByTagName('button');
+var checkbox = document.getElementsByTagName('input');
+var result = document.getElementById('lol');
+var bought = document.getElementById('cats');
+
+buy[0].addEventListener('click', function(){
 	Cashier.getEl();
 	console.log(Cashier.total);
+	lol.innerHTML = 'Total Price = ' + Cashier.total;
+	bought.innerHTML = 'You have bought: ' + BoughtCat;
 });
