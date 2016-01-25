@@ -23,6 +23,7 @@ var Cashier = {
 }
 
 var BoughtCat = [];
+//input takes this.name and this.price, button creates new Item and push this.item to Cats[]
 var itemCat1 = new Item("Tiger", 10);
 var itemCat2 = new Item("Mishka", 20);
 var itemCat3 = new Item("Sam", 30);
