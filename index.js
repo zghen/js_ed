@@ -15,17 +15,29 @@ var Cat = function(name, price, src) {
 	this.bought = false;
 	this.src = src;
 	this.id = 'Cat' + ++counter;
- };
+};
 
 var Basket = {
+		total : 0,
 		catArray : [],
 		addCat : function(cat) {			
 			Basket.catArray.push(cat);
+			return catIndex = Basket.catArray.length - 1;
 		},
-		removeCat : function(cat) {
-
-			Basket.catArray[0];			
-		}
+		deleteCat : function(cat) {
+			delete Basket.catArray[cat];
+		},
+		calc: function() {
+			Basket.catArray.forEach(function(element, index, arr){
+				if(arr[index].bought === true){
+					var price = parseInt(arr[index].price);
+					Basket.total += price;
+					return Basket.total;
+				}
+				else console.log('Error!');
+			})
+		},
+		catIndex : 0
 }
 
 function generateCat(name, price, src){
@@ -33,6 +45,7 @@ function generateCat(name, price, src){
 	Basket.addCat(cat);
 	var div = generateDiv(cat);
 	document.body.appendChild(div);
+	
 }
 
 function generate(element, html, src) {
@@ -54,10 +67,20 @@ function generateDiv(cat) {
 
 	var img = generate('img', '' , cat.src);
 	var button = generate('button', 'Add');
+		button.addEventListener('click', function(){
+			cat.bought = true;
+	});
 	var button2 = generate('button', 'Remove');
+		button2.addEventListener('click', function(){
+			cat.bought = false;
+	});
+	var button3 = generate('button', 'Delete');
+		button3.addEventListener('click', function(){
+			Basket.deleteCat(cat);
+		});
 	var p = generate('p', cat.price);
 
-	[img, button, button2, p].forEach(function(element){
+	[img, button, button2, button3, p].forEach(function(element){
 		div.appendChild(element);
 	});
 
