@@ -1,6 +1,17 @@
 var counter = 0;
 
-var createCat = document.getElementById('createCat');
+var createCat = document.getElementById('createCat'),
+	calcCat = document.getElementById('calcCat');
+
+calcCat.addEventListener('click', function(){
+	var resultCat = document.getElementById('resultCat');
+	Basket.calc();
+	for (var i = 0; i < Basket.catArray.length; i++) {
+		if (Basket.catArray[i].bought === true) {
+			resultCat.innerHTML = 'You have bought cats: ' + Basket.catArray[i].name + ' ' + 'Your total = ' + Basket.total;
+		}			
+	};
+});
 
 createCat.addEventListener('click', function(){
 	var name = document.getElementById('catName').value;
@@ -8,6 +19,8 @@ createCat.addEventListener('click', function(){
 	var src = document.getElementById('catSrc').value;
 	generateCat(name, price, src);
 });
+
+
 
 var Cat = function(name, price, src) {
 	this.name = name;
@@ -34,7 +47,10 @@ var Basket = {
 					Basket.total += price;
 					return Basket.total;
 				}
-				else console.log('Error!');
+				else {
+					console.log('Error!');
+					return Basket.total = 0;
+				}
 			})
 		},
 		catIndex : 0
