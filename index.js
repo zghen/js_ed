@@ -28,6 +28,7 @@ var Cat = function(name, price, src) {
 	this.bought = false;
 	this.src = src;
 	this.id = 'Cat' + ++counter;
+	this.catIndex = 0;
 };
 
 var Basket = {
@@ -35,10 +36,13 @@ var Basket = {
 		catArray : [],
 		addCat : function(cat) {			
 			Basket.catArray.push(cat);
-			return catIndex = Basket.catArray.length - 1;
+			return cat.catIndex = Basket.catArray.length - 1;
 		},
 		deleteCat : function(cat) {
-			delete Basket.catArray[cat];
+			var index = cat.catIndex;
+			console.log(index);
+			delete Basket.catArray[index];
+
 		},
 		calc: function() {
 			Basket.catArray.forEach(function(element, index, arr){
@@ -52,8 +56,7 @@ var Basket = {
 					return Basket.total = 0;
 				}
 			})
-		},
-		catIndex : 0
+		}
 }
 
 function generateCat(name, price, src){
@@ -93,7 +96,9 @@ function generateDiv(cat) {
 	var button3 = generate('button', 'Delete');
 		button3.addEventListener('click', function(){
 			Basket.deleteCat(cat);
+			document.body.removeChild(div);
 		});
+
 	var p = generate('p', cat.price);
 
 	[img, button, button2, button3, p].forEach(function(element){
