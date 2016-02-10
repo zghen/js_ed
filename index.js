@@ -7,9 +7,15 @@ calcCat.addEventListener('click', function(){
 	var resultCat = document.getElementById('resultCat');
 	Basket.calc();
 	for (var i = 0; i < Basket.catArray.length; i++) {
-		if (Basket.catArray[i].bought === true) {
-			resultCat.innerHTML = 'You have bought cats: ' + Basket.catArray[i].name + ' ' + 'Your total = ' + Basket.total;
-		}			
+			try{
+				if (Basket.catArray[i].bought === true) {
+				resultCat.innerHTML = 'You have bought cats: ' + Basket.catArray[i].name + ' ' + 'Your total = ' + Basket.total;
+				}
+			}
+			catch(e){
+				resultCat.innerHTML = 'You have bought no cats!'
+				console.log(e);
+			}			
 	};
 });
 
