@@ -5,17 +5,14 @@ var createCat = document.getElementById('createCat'),
 
 calcCat.addEventListener('click', function(){
 	var resultCat = document.getElementById('resultCat');
-	Basket.calc();
-	for (var i = 0; i < Basket.catArray.length; i++) {
-			try{
-				if (Basket.catArray[i].bought === true) {
-				resultCat.innerHTML = 'You have bought cats: ' + Basket.catArray[i].name + ' ' + 'Your total = ' + Basket.total;
-				}
-			}
-			catch(e){
-				resultCat.innerHTML = 'You have bought no cats!'
-				console.log(e);
-			}			
+	Basket.sum();
+	for (var i = 0; i < Basket.items.length; i++) {
+		if (Basket.items[i].bought === true && Basket.total != 0) {
+			resultCat.innerHTML = 'Your total is = ' + Basket.total;
+		}
+		if (Basket.total === 0) {
+			resultCat.innerHTML = 'You have bought any cats! ';
+		}
 	};
 });
 
@@ -34,34 +31,26 @@ var Cat = function(name, price, src) {
 	this.bought = false;
 	this.src = src;
 	this.id = 'Cat' + ++counter;
-	this.catIndex = 0;
 };
 
 var Basket = {
 		total : 0,
-		catArray : [],
+		items : [],
 		addCat : function(cat) {			
-			Basket.catArray.push(cat);
-			return cat.catIndex = Basket.catArray.length - 1;
+			this.items.push(cat);
 		},
 		deleteCat : function(cat) {
-			var index = cat.catIndex;
-			console.log(index);
-			delete Basket.catArray[index];
-
+			var index = this.items.indexOf(cat);
+			this.items.splice(index, 1);
 		},
-		calc: function() {
-			Basket.catArray.forEach(function(element, index, arr){
+		sum: function() {
+			this.total = 0;
+			this.items.forEach(function(element, index, arr){
 				if(arr[index].bought === true){
-					var price = parseInt(arr[index].price);
-					Basket.total += price;
-					return Basket.total;
+					var price = parseInt(arr[index].price);					
+					return this.total += price;
 				}
-				else {
-					console.log('Error!');
-					return Basket.total = 0;
-				}
-			})
+			}, this);
 		}
 }
 
